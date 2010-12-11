@@ -1,19 +1,17 @@
 // Colour Themes
-var themes = [['#2167a4',  '#f8c524', '#cb2a28', '#169045', '#ffffff']];
-// Content
-var e1 = '', e2 = '';
+var themes = [['#2167a4',  '#f8c524', '#cb2a28', '#169045', '#ffffff']],
 // Settings
-var body = document.body,
-frameRate = 20,
+body = document.body,
+FPS = 20,
 contentPadding = 20,
 ballsFront = 10,
 ballsBehind = 8,
 ballDensity = .5,
 ballFriction = 0.2,
 ballRestitution = 0.3,
-ballRotation = .05;
+ballRotation = .05,
 // Canvas Setup
-var canvas,
+canvas,
 delta = [0, 0],
 stage = [window.screenX, window.screenY, window.innerWidth, window.innerHeight];
 getBrowserDimensions();
@@ -22,7 +20,7 @@ var source = document.getElementById('bod'),
 sourceParent = source.parentNode,
 items = source.getElementsByTagName('div'),
 theme = themes[Math.floor(Math.random() * themes.length)],
-worldAABB, world, iterations = 1, timeStep = 1 / frameRate,
+worldAABB, world, iterations = 1, timeStep = 1 / FPS,
 walls = [],
 wall_thickness = 200,
 wallsSetted = false,
@@ -38,7 +36,7 @@ timeOfLastTouch = 0,
 dir = 1;
 
 // Init
-if (supports_canvas_text()) {
+if (canvasTextSupport()) {
     source.style.visibility = 'hidden';
     body.style.overflow = 'hidden';
     init();
@@ -47,28 +45,28 @@ if (supports_canvas_text()) {
     source.style.visibility = 'visible';
 }
 
-function supports_canvas() {
+function canvasSupport() {
   return !!document.createElement('canvas').getContext;
 }
 
-function supports_canvas_text() {
-  if (!supports_canvas()) { return false; }
+function canvasTextSupport() {
+  if (!canvasSupport()) { return false; }
   var dummy_canvas = document.createElement('canvas'),
   context = dummy_canvas.getContext('2d');
   return typeof context.fillText == 'function';
 }
 
 function init() {
-    //source.style.visibility = 'hidden';
-    canvas = document.getElementById( 'canvas' );
-    document.onmousedown = onDocumentMouseDown;
-    document.onmouseup = onDocumentMouseUp;
-    document.onmousemove = onDocumentMouseMove;
-    document.onkeydown = onKeyEvent;
-    document.onkeypress = onKeyEvent;
-    //document.addEventListener( 'touchstart', onDocumentTouchStart, false );
-    document.addEventListener( 'touchmove', onDocumentTouchMove, false );
-    //document.addEventListener( 'touchend', onDocumentTouchEnd, false );
+    var dom = document;
+    canvas = dom.getElementById( 'canvas' );
+    dom.onmousedown = onMouseDown;
+    dom.onmouseup = onMouseUp;
+    dom.onmousemove = onMouseMove;
+    dom.onkeydown = onKeyEvent;
+    dom.onkeypress = onKeyEvent;
+    //dom.addEventListener( 'touchstart', onTouchStart, false );
+    dom.addEventListener( 'touchmove', onTouchMove, false );
+    //dom.addEventListener( 'touchend', onTouchEnd, false );
     worldAABB = new b2AABB(); // init box2d
     worldAABB.minVertex.Set( -200, -200 );
     worldAABB.maxVertex.Set( screen.width + 200, screen.height + 200 );
@@ -92,12 +90,11 @@ function convertContent() {
         items[i].style.clear = 'none';
         itemClass = items[i].getAttribute('class');
         itemWidth = items[i].clientWidth;
-        //itemWidth = itemWidth.substring(0,itemWidth.length-2);
         itemBackground = getstyle(items[i], 'backgroundColor');
         itemContent = items[i].innerHTML;
         createContentBall(itemClass, itemWidth, itemBackground, itemContent);
     }
-    sourceParent.removeChild(source);
+    // sourceParent.removeChild(source);
 }
 
 function play() {
@@ -105,6 +102,7 @@ function play() {
 }
 
 function reset() {
+    var i = 0;
     if ( bodies ) {
         var body;
         for ( i = 0; i < bodies.length; i++ ) {
@@ -116,17 +114,21 @@ function reset() {
     }
     bodies = [];
     elements = [];
-    for( var i = 0; i < ballsBehind; i++ ) {
+    for( i = 0; i < ballsBehind; i++ ) {
         createBall();
     }
     convertContent();
-    for( var i = 0; i < ballsFront; i++ ) {
+    for( i = 0; i < ballsFront; i++ ) {
         createBall();
     }
 }
 
 function createContentBall(className,size,color,html) {
-    var element = document.createElement( 'div' );
+    var element = document.createElement( 'div' ),
+    circle = document.createElement( 'canvas' ),
+    graphics = circle.getContext( '2d' ),
+    b2body = new b2BodyDef(), 
+    crc = new b2CircleDef();
     element.className = className;
     element.width = element.height = size;
     element.style.position = 'absolute';
@@ -135,35 +137,33 @@ function createContentBall(className,size,color,html) {
     element.style.cursor = 'default';
     canvas.appendChild(element);
     elements.push( element );
-    var circle = document.createElement( 'canvas' );
+    
     circle.width = size;
     circle.height = size;
-    if (className !=='image' && className !=='image first') {
-        var graphics = circle.getContext( '2d' );
-        graphics.fillStyle = color;
-        graphics.beginPath();
-        graphics.arc( size * .5, size * .5, size * .5, 0, PI2, true );
-        graphics.closePath();
-        graphics.fill();
-    }
+    
+    graphics.fillStyle = color;
+    graphics.beginPath();
+    graphics.arc( size * .5, size * .5, size * .5, 0, PI2, true );
+    graphics.closePath();
+    graphics.fill();
     element.appendChild( circle );
     content = document.createElement( 'div' );
     content.className = 'content';
     content.onSelectStart = null;
     content.innerHTML = html;
     element.appendChild(content);
-    if (className !=='image' && className !=='image first' ) {
-        content.style.width = (size - contentPadding*2) + 'px';
-        content.style.left = (((size - content.clientWidth) / 2)) +'px';
-        content.style.top = ((size - content.clientHeight) / 2) +'px';
+    content.style.width = (size - contentPadding*2) + 'px';
+    content.style.left = (((size - content.clientWidth) / 2)) +'px';
+    content.style.top = ((size - content.clientHeight) / 2) +'px';
+    if(className == 'reset'){
+        element.addEventListener('click', reset, false);
     }
-    var b2body = new b2BodyDef();
-    var circle = new b2CircleDef();
-    circle.radius = size / 2;
-    circle.density = ballDensity;
-    circle.friction = ballFriction;
-    circle.restitution = ballRestitution;
-    b2body.AddShape(circle);
+    
+    crc.radius = size / 2;
+    crc.density = ballDensity;
+    crc.friction = ballFriction;
+    crc.restitution = ballRestitution;
+    b2body.AddShape(crc);
     b2body.userData = {element: element};
     b2body.position.Set( Math.random() * stage[2], Math.random() * (stage[3]-size) + size/2);
     b2body.linearVelocity.Set( Math.random() * 200, Math.random() * 200 );
@@ -174,13 +174,17 @@ function createBall( x, y ) {
     var x = x || Math.random() * stage[2],
     y = y || Math.random() * 500,
     size = (Math.random() * 100 >> 0) + 20,
-    element = document.createElement('canvas');
+    element = document.createElement('canvas'),
+    graphics = element.getContext('2d'),
+    b2body = new b2BodyDef(),
+    circle = new b2CircleDef();
+    
     element.width = size;
     element.height = size;
     element.style['position'] = 'absolute';
     element.style['left'] = -200 + 'px';
     element.style['top'] = -200 + 'px';
-    var graphics = element.getContext('2d');
+    
     graphics.fillStyle = theme[Math.floor(Math.random() * theme.length)];
     graphics.beginPath();
     graphics.arc(size * .5, size * .5, size * .5, 0, PI2, true); 
@@ -188,8 +192,7 @@ function createBall( x, y ) {
     graphics.fill();
     canvas.appendChild(element);
     elements.push( element );
-    var b2body = new b2BodyDef();
-    var circle = new b2CircleDef();
+    
     circle.radius = size >> 1;
     circle.density = ballDensity;
     circle.friction = ballFriction;
@@ -238,19 +241,29 @@ function createBox(world, x, y, width, height, fixed) {
     boxBd.position.Set(x,y);
     return world.CreateBody(boxBd);
 }
-function onDocumentMouseDown() {
+function onKeyEvent(e) {
+    switch (e.which) {
+        case 40:
+            dir = 1;
+            break;
+        case 38:
+            dir = -1;
+            break;
+    }
+}
+function onMouseDown() {
     isMouseDown = true;
     return false;
 }
-function onDocumentMouseUp() {
+function onMouseUp() {
     isMouseDown = false;
     return false;
 }
-function onDocumentMouseMove( event ) {
+function onMouseMove( event ) {
     mouseX = event.clientX;
     mouseY = event.clientY;
 }
-function onDocumentTouchStart( event ) {
+function onTouchStart( event ) {
     if( event.touches.length == 1 ) {
         event.preventDefault();
         /*/ Faking double click for touch devices
@@ -265,14 +278,14 @@ function onDocumentTouchStart( event ) {
         isMouseDown = true;
     }
 }
-function onDocumentTouchMove( event ) {
+function onTouchMove( event ) {
     if ( event.touches.length == 1 ) {
         event.preventDefault();
         mouseX = event.touches[ 0 ].pageX;
         mouseY = event.touches[ 0 ].pageY;
     }
 }
-function onDocumentTouchEnd( event ) {
+function onTouchEnd( event ) {
     if ( event.touches.length == 0 ) {
         event.preventDefault();
         isMouseDown = false;
@@ -314,16 +327,15 @@ function mouseDrag() {
 }
 function getBodyAtMouse() {
     // Make a small box.
-    var mousePVec = new b2Vec2();
+    var mousePVec = new b2Vec2(), aabb = new b2AABB();
     mousePVec.Set(mouseX, mouseY);
-    var aabb = new b2AABB();
     aabb.minVertex.Set(mouseX - 1, mouseY - 1);
     aabb.maxVertex.Set(mouseX + 1, mouseY + 1);
     // Query the world for overlapping shapes.
-    var k_maxCount = 10;
-    var shapes = new Array();
-    var count = world.Query(aabb, shapes, k_maxCount);
-    var body = null;
+    var k_maxCount = 10,
+    shapes = [],
+    count = world.Query(aabb, shapes, k_maxCount),
+    body = null;
     for (var i = 0; i < count; ++i) {
         if (shapes[i].m_body.IsStatic() == false) {
             if ( shapes[i].TestPoint(mousePVec) ) {
@@ -374,18 +386,3 @@ function getBrowserDimensions() {
     }
     return changed;
 }
-function onKeyEvent(e) {
-    switch (e.which) {
-        case 40:
-            dir = 1;
-            break;
-        case 38:
-            dir = -1;
-            break;
-    }
-}
-/*
-$(function(){
-    // window load
-});
-*/
