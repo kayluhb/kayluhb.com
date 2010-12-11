@@ -1,15 +1,5 @@
-/*
-THERE WEB SITE 2010
------------------------------------------------------
-Designed and created by Jesson Yip. www.jessonyip.com
-Original code by Mr Doob www.mrdoob.com
------------------------------------------------------
-*/
-
 // Colour Themes
-var themes = [
-    ['#2167a4',  '#f8c524', '#cb2a28', '#169045', '#ffffff']
-];
+var themes = [['#2167a4',  '#f8c524', '#cb2a28', '#169045', '#ffffff']];
 // Content
 var e1 = '', e2 = '';
 // Settings
@@ -28,7 +18,7 @@ delta = [0, 0],
 stage = [window.screenX, window.screenY, window.innerWidth, window.innerHeight];
 getBrowserDimensions();
 // Variables
-var source = document.getElementById('main'),
+var source = document.getElementById('bod'),
 sourceParent = source.parentNode,
 items = source.getElementsByTagName('div'),
 theme = themes[Math.floor(Math.random() * themes.length)],
@@ -44,7 +34,8 @@ mouseJoint,
 mouseX = 0,
 mouseY = 0,
 PI2 = Math.PI * 2,
-timeOfLastTouch = 0;
+timeOfLastTouch = 0,
+dir = 1;
 
 // Init
 if (supports_canvas_text()) {
@@ -73,6 +64,8 @@ function init() {
     document.onmousedown = onDocumentMouseDown;
     document.onmouseup = onDocumentMouseUp;
     document.onmousemove = onDocumentMouseMove;
+    document.onkeydown = onKeyEvent;
+    document.onkeypress = onKeyEvent;
     //document.addEventListener( 'touchstart', onDocumentTouchStart, false );
     document.addEventListener( 'touchmove', onDocumentTouchMove, false );
     //document.addEventListener( 'touchend', onDocumentTouchEnd, false );
@@ -82,7 +75,6 @@ function init() {
     world = new b2World( worldAABB, new b2Vec2( 0, 0 ), true );
     setWalls();
     reset();
-    console.log(world);
 }
 
 function getstyle(obj, cAttribute) {
@@ -213,16 +205,17 @@ function loop() {
     delta[0] += (0 - delta[0]) * .5;
     delta[1] += (0 - delta[1]) * .5;
     world.m_gravity.x = 0 // -(0 + delta[0]);
-    world.m_gravity.y = (100 - delta[1]);
+    world.m_gravity.y = dir * (100 - delta[1]);
     mouseDrag();
     world.Step(timeStep, iterations);
+    var body, element, rotationStyle = '';
     for (i = 0; i < bodies.length; i++) {
-        var body = bodies[i];
-        var element = elements[i];
+        body = bodies[i];
+        element = elements[i];
         element.style.left = (body.m_position0.x - (element.width >> 1)) + 'px';
         element.style.top = (body.m_position0.y - (element.height >> 1)) + 'px';
         if (ballRotation && element.tagName == 'DIV') {
-            var rotationStyle = 'rotate(' + (body.m_rotation0 * 57.2957795) + 'deg)';
+            rotationStyle = 'rotate(' + (body.m_rotation0 * 57.2957795) + 'deg)';
             element.style.WebkitTransform = rotationStyle;
             element.style.MozTransform = rotationStyle;
             element.style.OTransform = rotationStyle;
@@ -245,22 +238,18 @@ function createBox(world, x, y, width, height, fixed) {
     boxBd.position.Set(x,y);
     return world.CreateBody(boxBd);
 }
-
 function onDocumentMouseDown() {
     isMouseDown = true;
     return false;
 }
-
 function onDocumentMouseUp() {
     isMouseDown = false;
     return false;
 }
-
 function onDocumentMouseMove( event ) {
     mouseX = event.clientX;
     mouseY = event.clientY;
 }
-
 function onDocumentTouchStart( event ) {
     if( event.touches.length == 1 ) {
         event.preventDefault();
@@ -276,7 +265,6 @@ function onDocumentTouchStart( event ) {
         isMouseDown = true;
     }
 }
-
 function onDocumentTouchMove( event ) {
     if ( event.touches.length == 1 ) {
         event.preventDefault();
@@ -284,14 +272,12 @@ function onDocumentTouchMove( event ) {
         mouseY = event.touches[ 0 ].pageY;
     }
 }
-
 function onDocumentTouchEnd( event ) {
     if ( event.touches.length == 0 ) {
         event.preventDefault();
         isMouseDown = false;
     }
 }
-
 function mouseDrag() {
     // Mouse Press
     if (createMode) {
@@ -326,7 +312,6 @@ function mouseDrag() {
         mouseJoint.SetTarget(p2);
     }
 }
-
 function getBodyAtMouse() {
     // Make a small box.
     var mousePVec = new b2Vec2();
@@ -349,7 +334,6 @@ function getBodyAtMouse() {
     }
     return body;
 }
-
 function setWalls() {
     if (wallsSetted) {
         world.DestroyBody(walls[0]);
@@ -367,7 +351,6 @@ function setWalls() {
     walls[3] = createBox(world, stage[2] + wall_thickness, stage[3] / 2, wall_thickness, stage[3]);    
     wallsSetted = true;
 }
-
 // Browser Dimensions
 function getBrowserDimensions() {
     var changed = false;
@@ -390,6 +373,16 @@ function getBrowserDimensions() {
         changed = true;
     }
     return changed;
+}
+function onKeyEvent(e) {
+    switch (e.which) {
+        case 40:
+            dir = 1;
+            break;
+        case 38:
+            dir = -1;
+            break;
+    }
 }
 /*
 $(function(){

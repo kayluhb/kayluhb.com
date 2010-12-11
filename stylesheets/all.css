@@ -9,14 +9,14 @@ html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pr
 /* HTML */
 html, body { background-color:#ddd; height:100%; text-align:center; }
 html { overflow:hidden; -webkit-font-smoothing:antialiased; }
-body,div,dd,dl,dt,h1,h2,h3,h4,h5,h6,li,ol,span,td,th,ul { color:#444; font:15px Georgia,verdana,serif; line-height:1.22; }
+body,div,dd,dl,dt,h1,h2,h3,h4,h5,h6,li,ol,span,td,th,ul { color:#444; font:15px Georgia,verdana,serif; line-height:1.1; }
 a { color:#f47a4d; text-decoration:none; }
 a:hover, h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover { color:#c01339; text-decoration:none; }
 img { border:none; }
 p { padding:10px 0; }
 strong, b { font-weight:bold; }
 em, i { font-style:italic; }
-h1, h2, h3, h4, h5, h6 { color:#000; font-weight:bold; padding:10px 0; text-rendering:optimizeLegibility; }
+h1, h2, h3, h4, h5, h6 { color:#fff; font-style:italic; font-weight:normal; padding:10px 0; text-rendering:optimizeLegibility; }
 h1, h1 a { font-size:26px; padding-top:0; }
 h2, h2 a { font-size:24px; }
 h3, h3 a { font-size:22px; }
@@ -50,8 +50,8 @@ fieldset { margin-bottom:8px; }
 label { font-weight:bold; font-size:13px; display:block; margin:0 0 2px 0; }
 label.radio { display:inline; font-size:13px; padding-left:3px; }
 
-::selection { background:#c01339; color:#fff; }
-::-moz-selection { background:#c01339; color:#fff; } 
+::selection { background:#cb2a28; color:#fff; }
+::-moz-selection { background:#cb2a28; color:#fff; } 
 a:focus, button:focus, input:focus, label:focus, select:focus, textarea:focus { outline:1px dotted #c01339; }
 /* /HTML */
 /* CLASSES */
@@ -72,12 +72,27 @@ a:focus, button:focus, input:focus, label:focus, select:focus, textarea:focus { 
 .inline { display:inline; }
 .alert, .required { color:#ff0000; }
 
-/* Basic View */
-#main div { padding:20px; margin:20px 0 0 20px; float:left; }
-#main div.white { width:80px; background:#fff; }
-#main div.section { width:210px; background:#fff; }
-#main div.droid { width:160px; background:#fff; }
-#main div.first { clear:left; }
+#bod div { float:left; margin:20px 0 0 20px; padding:20px; }
+#bod div.white { background:#fff; width:80px; }
+#bod div.droid { background:#fff; width:160px; }
+#bod div.first { clear:left; }
+#bod div.twitter { width:200px; background:#3ecfff; }
+#bod div.balls { background:#d25e15; width:80px; }
+#bod div.wedding { background:#505456; width:100px; }
 .content { left:0; position:absolute; top:0; }
+.content a { color:#444; font-weight:bold; -webkit-transition:color .15s linear; -moz-transition:color .15s linear; }
+.content a:hover, .content a.more { color:#fff; }
+.content a.more { font-size:12px; }
+.content a.more:hover { color:#cb2a28; }
+
+
+
+
+
+
+
+
+
+
 
 

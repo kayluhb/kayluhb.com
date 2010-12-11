@@ -3,13 +3,15 @@
 <head>
     <meta charset="utf-8" />
     <title>kayluhb</title>
+    <meta id="description" name="description" content="Caleb Brown's personal site." />
+    <meta id="keyWords" name="keyWords" content="Caleb Brown, developer, brooklyn" />
     <!--[if lte IE 8]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     <link href="stylesheets/all.css" rel="stylesheet" />
     <link href="stylesheets/print.css" media="print" rel="stylesheet" />
     <link href="stylesheets/handheld.css?v=1" media="handheld" rel="stylesheet" />
 </head>
 <body>
-    <div id="main">
+    <div id="bod">
       <div class="droid"> 
         <img src="images/droid.png" />
       </div> 
@@ -28,14 +30,41 @@
       <div class="white">
         <img src="images/nexus.png" />
       </div>
+      <div class="white">
+        &uarr; up
+      </div>
+      <div class="white">
+        &darr; down
+      </div>
+      <div class="twitter">
+        <img src="images/twitter.png" />
+        <h2>Follow me</h1>
+        <a href="http://twitter.com/kayluhb">@kayluhb</a>
+      </div>
+      <div class="wedding">
+        <a href="/wedding" class="more">wedding</a>
+      </div>
+      <div class="balls">
+        <a href="/balls" class="more">more</a>
+      </div>
     </div> 
     <script type="text/javascript"> 
-      document.getElementById('main').style.visibility = 'hidden';
+      document.getElementById('bod').style.visibility = 'hidden';
     </script> 
     <div id="canvas"> 
     </div>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-592045-1']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
     <script src="javascripts/protoclass.js"></script> 
-    <script src='javascripts/box2d.js'></script> 
-    <script src='javascripts/application.js'></script>
+    <script src="javascripts/box2d.js"></script> 
+    <script src="javascripts/application.min.js"></script>
 </body>
 </html>
