@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<data imgFolder="../images/elves/">
+<data imgFolder="/gingerbread/images/elves/">
 	<lineWidth x="-13" y="0" border="2">9</lineWidth>
 	<lineWidth x="-37" y="18" border="3">12</lineWidth>
 	<lineWidth x="-64" y="38" border="3">17</lineWidth>
-	<lineColor>0xf78358</lineColor>
-	<lineColor>0xc9282d</lineColor>
+	<lineColor>0xa5ca39</lineColor>
+	<lineColor>0xcb2a28</lineColor>
 	<lineColor>0xffffff</lineColor>
-	<lineColor>0x288f0c</lineColor>
+	<lineColor>0x2167a4</lineColor>
 	<candy><![CDATA[Licorice]]></candy>
 	<candy><![CDATA[Sugar Stars]]></candy>
 	<candy><![CDATA[Gum Drops]]></candy>

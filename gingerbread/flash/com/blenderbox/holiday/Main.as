@@ -16,8 +16,8 @@
 		private var card:Object;
 		private var polaroids:Object;
 		
-		private const CARD_FILE:String = "../swfs/Card.swf";
-		private const POLAROIDS_FILE:String = "../swfs/Polaroids.swf";
+		private const CARD_FILE:String = "swfs/Card.swf";
+		private const POLAROIDS_FILE:String = "swfs/Polaroids.swf";
 		
 		public function Main() 
 		{

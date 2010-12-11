@@ -102,9 +102,8 @@ function play() {
 }
 
 function reset() {
-    var i = 0;
+    var i = 0, body;
     if ( bodies ) {
-        var body;
         for ( i = 0; i < bodies.length; i++ ) {
             body = bodies[i]
             canvas.removeChild( body.GetUserData().element );
@@ -239,12 +238,11 @@ function createBox(world, x, y, width, height, fixed) {
     if (typeof(fixed) == 'undefined') {
         fixed = true;
     }
-    var boxSd = new b2BoxDef();
+    var boxSd = new b2BoxDef(), boxBd = new b2BodyDef();
     if (!fixed) {
         boxSd.density = 1.0;
     }
     boxSd.extents.Set(width, height);
-    var boxBd = new b2BodyDef();
     boxBd.AddShape(boxSd);
     boxBd.position.Set(x,y);
     return world.CreateBody(boxBd);
@@ -343,8 +341,9 @@ function getBodyAtMouse() {
     var k_maxCount = 10,
     shapes = [],
     count = world.Query(aabb, shapes, k_maxCount),
-    body = null;
-    for (var i = 0; i < count; ++i) {
+    body = null,
+    i = 0;
+    for (i = 0; i < count; ++i) {
         if (shapes[i].m_body.IsStatic() == false) {
             if ( shapes[i].TestPoint(mousePVec) ) {
                 body = shapes[i].m_body;

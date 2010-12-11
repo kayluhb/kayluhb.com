@@ -33,7 +33,7 @@
 		private const CLEAR_W:Number = 103;
 		private const PANEL_TAR_Y:Number = 134;
 		private const UNDO_W:Number = 59;
-		private const XML_FILE:String = "../xml/Main.xml";
+		private const XML_FILE:String = "/gingerbread/xml/Main.xml";
 		
 		public function Card() 
 		{
@@ -55,7 +55,6 @@
 			decorateButton.addEventListener(		BaseButtonEvent.HANDLE_RELEASE, onDecorateRelease);
 			emailButton.addEventListener(			BaseButtonEvent.HANDLE_RELEASE, onEmailRelease);
 			polaroidPreview.addEventListener(		HolidayEvent.CLOSE_ELVES, onCloseElves);
-			purchaseButton.addEventListener(		BaseButtonEvent.HANDLE_RELEASE, onPurchaseRelease);
 			sendButton.addEventListener(			BaseButtonEvent.HANDLE_RELEASE, onSendRelease);
 			startButton.addEventListener(			BaseButtonEvent.HANDLE_RELEASE, onStartRelease);
 			undoButton.addEventListener(			BaseButtonEvent.HANDLE_RELEASE, onUndoRelease);
@@ -63,20 +62,16 @@
 			anotherCookieButton.addEventListener(	BaseButtonEvent.HANDLE_OUT, onButtonOut);
 			decorateButton.addEventListener(		BaseButtonEvent.HANDLE_OUT, onButtonOut);
 			emailButton.addEventListener(			BaseButtonEvent.HANDLE_OUT, onButtonOut);
-			purchaseButton.addEventListener(		BaseButtonEvent.HANDLE_OUT, onButtonOut);
 			sendButton.addEventListener(			BaseButtonEvent.HANDLE_OUT, onButtonOut);
 			startButton.addEventListener(			BaseButtonEvent.HANDLE_OUT, onButtonOut);
 			emailForm.emailButton.addEventListener(	BaseButtonEvent.HANDLE_OUT, onButtonOut);
-			purchaseForm.payPalButton.addEventListener(	BaseButtonEvent.HANDLE_OUT, onButtonOut);
 			
 			anotherCookieButton.addEventListener(	BaseButtonEvent.HANDLE_OVER, onButtonOver);
 			decorateButton.addEventListener(		BaseButtonEvent.HANDLE_OVER, onButtonOver);
 			emailButton.addEventListener(			BaseButtonEvent.HANDLE_OVER, onButtonOver);
-			purchaseButton.addEventListener(		BaseButtonEvent.HANDLE_OVER, onButtonOver);
 			sendButton.addEventListener(			BaseButtonEvent.HANDLE_OVER, onButtonOver);
 			startButton.addEventListener(			BaseButtonEvent.HANDLE_OVER, onButtonOver);
 			emailForm.emailButton.addEventListener(	BaseButtonEvent.HANDLE_OVER, onButtonOver);
-			purchaseForm.payPalButton.addEventListener(	BaseButtonEvent.HANDLE_OVER, onButtonOver);
 			
 			clearButton.addEventListener(			BaseButtonEvent.HANDLE_OUT, onClearButtonOut);
 			undoButton.addEventListener(			BaseButtonEvent.HANDLE_OUT, onUndoButtonOut);
@@ -91,7 +86,6 @@
 				case "": drawHome(); break;
 				case "decorate": 		drawDecorate(); break;
 				case "elves": 			drawElves(); break;
-				case "purchase": 		drawPurchase(); break;
 				case "send": 			drawSend(); break;
 				case "send-to-friend": 	drawSendToFriend(); break;
 				case "thank-you": 		drawThankYou(); break;
@@ -125,23 +119,12 @@
 			TweenLite.to(gingerbreadCookie, 1, { rotation:90, x:0, y:-268, ease:Expo.easeOut } );
 			polaroidPreview.hide();
 		}
-		private function drawPurchase():void {
-			purchaseForm.enable();
-			purchaseForm.reset();
-			purchaseForm.visible = true;
-			TweenLite.to(purchaseForm, 1.5, { y:153, ease:Expo.easeOut } );
-			TweenLite.to(gingerbreadCookie, 1, { rotation: -27, x:-42, y:312, ease:Expo.easeOut } );
-			tag.x = 138;
-			tag.gotoAndStop(3);
-			TweenLite.to(tag, 1.2, { rotation:0, y:-39, ease:Back.easeOut, delay:0.8 } );
-		}
 		private function drawSend():void { 
 			decorateButton.visible = true;
 			TweenLite.to(parchment, 1.5, { y: -parchment.height, ease:Expo.easeOut } );
 			TweenLite.to(gingerbreadCookie, 1, { rotation:-11, x:76, y:203, ease:Expo.easeOut } );
 			TweenLite.to(sendCopy, 0.6, { autoAlpha:1, delay:0.4 } );
 			TweenLite.to(emailButton, 0.6, { autoAlpha:1, delay:0.8 } );
-			TweenLite.to(purchaseButton, 0.6, { autoAlpha:1, delay:1 } );
 		}
 		private function drawSendToFriend():void {
 			emailForm.enable();
@@ -165,8 +148,6 @@
 			emailButton.visible = false;
 			emailForm.visible = false;
 			homeCopy.visible = false;
-			purchaseButton.visible = false;
-			purchaseForm.visible = false;
 			sendButton.visible = false;
 			sendCopy.visible = false;
 			startButton.visible = false;
@@ -212,15 +193,10 @@
 			TweenLite.to(clearButton.shadow, .4, { autoAlpha:0 } );
 			TweenLite.to(clearButton.labelMask, .4, { width:0, x:103, ease:Expo.easeOut } );
 		}
-		private function hidePurchase():void { 
-			TweenLite.to(purchaseForm, 1, { y:-purchaseForm.height, ease:Expo.easeOut, onComplete:onFormOut } );
-			TweenLite.to(tag, 1.2, { rotation:0, y:-tag.height, ease:Back.easeOut, onComplete:changeState, onCompleteParams:[nextState] } );
-		}
 		private function hideSend():void {
 			decorateButton.visible = false;
 			TweenLite.to(sendCopy, 0.6, { autoAlpha:0 } );
 			TweenLite.to(emailButton, 0.6, { autoAlpha:0 } );
-			TweenLite.to(purchaseButton, 0.6, { autoAlpha:0, onComplete:changeState, onCompleteParams:[nextState] } );
 		}
 		private function hideSendToFriend():void { 
 			TweenLite.to(emailForm, 1, { y:-emailForm.height, ease:Expo.easeOut, onComplete:onFormOut } );
@@ -237,7 +213,6 @@
 				case "": 				hideHome(); break;
 				case "elves": 			hideElves(); break;
 				case "decorate": 		hideDecorate(); break;
-				case "purchase": 		hidePurchase(); break;
 				case "send": 			hideSend(); break;
 				case "send-to-friend": 	hideSendToFriend(); break;
 				case "thank-you": 		hideThankYou(); break;
@@ -291,7 +266,6 @@
 			gingerbreadCookie.enabled = true;
 		}
 		private function onFormOut():void {
-			purchaseForm.visible = false;
 			emailForm.visible = false;
 		}
 		private function onStageKeyDown(e:KeyboardEvent):void {
@@ -339,7 +313,6 @@
 		// nav handlers
 		private function onDecorateRelease(e:BaseButtonEvent):void { 	SWFAddress.setValue("/decorate"); }
 		private function onEmailRelease(e:BaseButtonEvent):void {		SWFAddress.setValue("/send-to-friend"); }
-		private function onPurchaseRelease(e:BaseButtonEvent):void { 	SWFAddress.setValue("/purchase"); }
 		private function onSendRelease(e:BaseButtonEvent):void { 		SWFAddress.setValue("/send"); }
 		private function onStartRelease(e:BaseButtonEvent):void { 		SWFAddress.setValue("/decorate"); }
 	}
