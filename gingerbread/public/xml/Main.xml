@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data imgFolder="../images/elves/">
+	<lineWidth x="-13" y="0" border="2">9</lineWidth>
+	<lineWidth x="-37" y="18" border="3">12</lineWidth>
+	<lineWidth x="-64" y="38" border="3">17</lineWidth>
+	<lineColor>0xf78358</lineColor>
+	<lineColor>0xc9282d</lineColor>
+	<lineColor>0xffffff</lineColor>
+	<lineColor>0x288f0c</lineColor>
+	<candy><![CDATA[Licorice]]></candy>
+	<candy><![CDATA[Sugar Stars]]></candy>
+	<candy><![CDATA[Gum Drops]]></candy>
+	<candy><![CDATA[Red Hots]]></candy>
+	<candy><![CDATA[M&Ms]]></candy>
+	<!--polaroid src="Image01.png"><![CDATA[]]></polaroid-->
+	<polaroid src="Image02.png"><![CDATA[Our very merry holiday cookies.]]></polaroid>
+	<polaroid src="Image03.png"><![CDATA[The elves break for conversation.]]></polaroid>
+	<polaroid src="Image04.png"><![CDATA[Tsam's cookie begins to take shape.]]></polaroid>
+	<polaroid src="Image05.png"><![CDATA[The Blenderbox elves hard at work.]]></polaroid>
+	<polaroid src="Image06.png"><![CDATA[Inspiration strikes the elves.]]></polaroid>
+	<polaroid src="Image07.png"><![CDATA[The elves celebrate a job well done.]]></polaroid>
+	<polaroid src="Image08.png"><![CDATA[Watching the elves work their magic.]]></polaroid>
+	<polaroid src="Image09.png"><![CDATA[Dave carefully adds his finishing touch.]]></polaroid>
+	<!--polaroid src="Image10.png"><![CDATA[]]></polaroid-->
+	<polaroid src="Image11.png"><![CDATA[Gloves, belts, and tasty accessories.]]></polaroid>
+	<!--polaroid src="Image12.png"><![CDATA[]]></polaroid-->
+	<polaroid src="Image13.png"><![CDATA[Jacks perfects her decorating technique.]]></polaroid>
+	<polaroid src="Image14.png"><![CDATA[Admiring Jacqueline's candy handiwork.]]></polaroid>
+</data>

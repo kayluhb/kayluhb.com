@@ -1,0 +1,14 @@
+<IfModule mod_rewrite.c>
+
+# General Apache options
+Options +FollowSymLinks
+
+# Enables mod_rewrite
+RewriteEngine On
+
+# Allow certain filetypes
+RewriteCond %{REQUEST_URI} !^/.*\.(css|flv|gif|htm|html|ico|jpg|jpeg|js|pdf|png|php|swf|txt|xml)$ [NC]
+#RewriteCond %{REQUEST_URI} /paypal-thanks$ [NC]
+RewriteRule ([^/.]+) index.php
+
+</IfModule>
