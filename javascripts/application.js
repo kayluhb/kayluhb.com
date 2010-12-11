@@ -136,7 +136,8 @@ function createContentBall(className,size,color,html) {
     element.style.top = -size + 'px';
     element.style.cursor = 'default';
     canvas.appendChild(element);
-    elements.push( element );
+    elements.push( element ),
+    val = '';
     
     circle.width = size;
     circle.height = size;
@@ -155,8 +156,15 @@ function createContentBall(className,size,color,html) {
     content.style.width = (size - contentPadding*2) + 'px';
     content.style.left = (((size - content.clientWidth) / 2)) +'px';
     content.style.top = ((size - content.clientHeight) / 2) +'px';
-    if(className == 'reset'){
+    if(className === 'reset'){
         element.addEventListener('click', reset, false);
+    } else if (className === 'white') {
+        val = content.firstChild.nodeValue;
+        if(val.indexOf('up')>-1){
+            element.addEventListener('click', function(){ dir = -1}, false);
+        } else if(val.indexOf('down')>-1){
+            element.addEventListener('click', function(){ dir = 1}, false);
+        }
     }
     
     crc.radius = size / 2;
