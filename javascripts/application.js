@@ -157,8 +157,8 @@ function createContentBall(className,size,color,html) {
     content.style.top = ((size - content.clientHeight) / 2) +'px';
     if(className === 'reset'){
         element.addEventListener('click', reset, false);
-    } else if (className === 'white') {
-        val = content.firstChild.nodeValue;
+    } else if (className === 'dir') {
+        val = content.lastChild.nodeValue;
         if(val.indexOf('up')>-1){
             element.addEventListener('click', function(){ dir = -1}, false);
         } else if(val.indexOf('down')>-1){

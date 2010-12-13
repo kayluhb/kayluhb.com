@@ -12,13 +12,13 @@
 <body>
     <div id="bod">
       <div class="droid"> 
-        <img src="images/droid.png" alt="" height="90" width="73" />
+        <a href="/gingerbread" title="make your own"><img src="images/droid.png" alt="" height="90" width="73" /></a>
       </div> 
       <div class="droid">
-        <img src="images/droid.png" alt="" height="90" width="73" />
+        <a href="/gingerbread" title="make your own"><img src="images/droid.png" alt="" height="90" width="73" /></a>
       </div>
       <div class="droid">
-        <img src="images/droid.png" alt="" height="90" width="73" />
+        <a href="/gingerbread" title="make your own"><img src="images/droid.png" alt="" height="90" width="73" /></a>
       </div>
       <div class="reset">
         <img src="images/nexus.png" alt="reset" height="30" title="reset" width="30" />
@@ -26,15 +26,8 @@
       <div class="reset">
         <img src="images/nexus.png" alt="reset" height="30" title="reset" width="30" />
       </div>
-      <div class="reset">
-        <img src="images/nexus.png" alt="reset" height="30" title="reset" width="30" />
-      </div>
-      <div class="white">
-        &uarr; up
-      </div>
-      <div class="white">
-        &darr; down
-      </div>
+      <div class="dir"><b>&uarr;</b> up</div>
+      <div class="dir"><b>&darr;</b> down</div>
       <div class="twitter">
         <img src="images/twitter.png" alt="twitter" height="80" width="100" />
         <h2>Follow me</h2>
@@ -54,6 +47,9 @@
     </script> 
     <div id="canvas"> 
     </div>
+    <div id="legend">
+      click anywhere for more circles or a circle with <img src="images/nexus.png" alt="reset" height="10" title="reset" width="10" /> to reset
+    </div>
     <script type="text/javascript">
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-592045-1']);
@@ -66,6 +62,6 @@
     </script>
     <script src="javascripts/proto.js"></script> 
     <script src="javascripts/box2d.js"></script> 
-    <script src="javascripts/application.js"></script>
+    <script src="javascripts/application.min.js"></script>
 </body>
 </html>
