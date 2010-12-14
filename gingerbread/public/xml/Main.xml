@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<data imgFolder="/gingerbread/images/elves/">
+<data imgFolder="images/elves/">
 	<lineWidth x="-13" y="0" border="2">9</lineWidth>
 	<lineWidth x="-37" y="18" border="3">12</lineWidth>
 	<lineWidth x="-64" y="38" border="3">17</lineWidth>

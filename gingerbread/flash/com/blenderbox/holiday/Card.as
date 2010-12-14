@@ -33,7 +33,6 @@
 		private const CLEAR_W:Number = 103;
 		private const PANEL_TAR_Y:Number = 134;
 		private const UNDO_W:Number = 59;
-		private const XML_FILE:String = "/gingerbread/xml/Main.xml";
 		
 		public function Card() 
 		{
@@ -196,7 +195,7 @@
 		private function hideSend():void {
 			decorateButton.visible = false;
 			TweenLite.to(sendCopy, 0.6, { autoAlpha:0 } );
-			TweenLite.to(emailButton, 0.6, { autoAlpha:0 } );
+			TweenLite.to(emailButton, 0.6, { autoAlpha:0, onComplete:changeState, onCompleteParams:[nextState] } );
 		}
 		private function hideSendToFriend():void { 
 			TweenLite.to(emailForm, 1, { y:-emailForm.height, ease:Expo.easeOut, onComplete:onFormOut } );
@@ -208,7 +207,7 @@
 		}
 		private function undoState(s:String):void {
 			nextState = s;
-			//trace("undo state", nextState)
+			trace("undo state", nextState)
 			switch (state) {
 				case "": 				hideHome(); break;
 				case "elves": 			hideElves(); break;
@@ -221,10 +220,11 @@
 		
 		// event handlers
 		private function onAddedToStage(e:Event):void {
+			
 			var xmlLoader:XMLLoader = new XMLLoader();
-			var paramObj:Object = LoaderInfo(this.root.loaderInfo).parameters;
-			xmlLoader.addEventListener(XmlLoadEvent.ON_LOAD, onXmlLoad);
-			xmlLoader.load(paramObj.xmlFile != null ? paramObj.xmlFile : XML_FILE);
+      xmlLoader.addEventListener(XmlLoadEvent.ON_LOAD, onXmlLoad);
+      var xmlPath:String = Env.isOnline ? "/gingerbread/xml/Main.xml" : "../xml/Main.xml";
+      xmlLoader.load(xmlPath);
 			
 			addEventListeners();
 			onResize();
@@ -289,6 +289,7 @@
 				if (state == null) changeState(s);
 				else undoState(s);
 			}
+			trace(e, s);
 		}
 		private function onUndoButtonOut(e:BaseButtonEvent):void {
 			TweenLite.to(e.target.hit, .8, { width:UNDO_W, x:0, ease:Expo.easeOut } );

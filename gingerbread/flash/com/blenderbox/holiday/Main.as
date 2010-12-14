@@ -21,7 +21,7 @@
 		
 		public function Main() 
 		{
-			var c:CustomMenu = new CustomMenu(this);
+			var c:CustomMenu = new CustomMenu(this, false);
 			stage.align = StageAlign.TOP_LEFT;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			header.logo.enabled = false;

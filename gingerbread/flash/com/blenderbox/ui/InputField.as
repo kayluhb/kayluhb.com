@@ -28,6 +28,7 @@
 		public function InputField() 
 		{
 			draw();
+			valueTF.embedFonts = true;
 			valueTF.addEventListener(FocusEvent.FOCUS_IN, onValueTFFocusIn);
 			valueTF.addEventListener(FocusEvent.FOCUS_OUT, onValueTFFocusOut);
 		}
