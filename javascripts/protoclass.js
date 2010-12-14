@@ -40,11 +40,12 @@ Class.Methods = {
       var property = properties[i], value = source[property];
       if (ancestor && Object.isFunction(value) &&
           value.argumentNames().first() == "$super") {
-        var method = value, value = Object.extend((function(m) {
+        var method = value;
+		value = Object.extend((function(m) {
           return function() { return ancestor[m].apply(this, arguments); };
         })(property).wrap(method), {
-          valueOf:  function() { return method },
-          toString: function() { return method.toString() }
+          valueOf:  function() { return method; },
+          toString: function() { return method.toString(); }
         });
       }
       this.prototype[property] = value;
@@ -61,11 +62,11 @@ Object.extend = function(destination, source) {
 Object.extend(Object, {
   inspect: function(object) {
     try {
-      if (Object.isUndefined(object)) return 'undefined';
-      if (object === null) return 'null';
+      if (Object.isUndefined(object)) { return 'undefined'; }
+      if (object === null) {return 'null';}
       return object.inspect ? object.inspect() : String(object);
     } catch (e) {
-      if (e instanceof RangeError) return '...';
+      if (e instanceof RangeError) {return '...';}
       throw e;
     }
   },
@@ -114,13 +115,13 @@ Object.extend(Object, {
     return object && object.nodeType == 1;
   },
   isArray: function(object) {
-    return object != null && typeof object == "object" && 'splice' in object && 'join' in object;
+    return object !== null && typeof object === "object" && 'splice' in object && 'join' in object;
   },
   isHash: function(object) {
     return object instanceof Hash;
   },
   isFunction: function(object) {
-    return typeof object == "function";
+    return typeof object === "function";
   },
   isString: function(object) {
     return typeof object == "string";
@@ -134,9 +135,9 @@ Object.extend(Object, {
 });
 function $A(iterable) {
   if (!iterable) {return [];}
-  if (iterable.toArray) {return iterable.toArray();}
+  if (iterable.toArray) { return iterable.toArray(); }
   var length = iterable.length || 0, results = new Array(length);
-  while (length--) {results[length] = iterable[length];}
+  while (length--) { results[length] = iterable[length]; }
   return results;
 }
 if (WebKit = navigator.userAgent.indexOf('AppleWebKit/') > -1) {

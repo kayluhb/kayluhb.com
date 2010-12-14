@@ -33,7 +33,8 @@ mouseX = 0,
 mouseY = 0,
 PI2 = Math.PI * 2,
 timeOfLastTouch = 0,
-dir = 1;
+dir = 1,
+support = null;
 
 // Init
 if (canvasTextSupport()) {
@@ -43,6 +44,9 @@ if (canvasTextSupport()) {
     play();
 } else {
     source.style.visibility = 'visible';
+	support = document.createElement('div');
+	support.innerHTML = '<div class="support">Your browser does not support the features on this site :(  Please download a newer, safer, and free browser like <a href="http://www.google.com/chrome/intl/en/landing_chrome.html?hl=en">chrome</a></div>';
+    document.body.insertBefore(support, source);
 }
 
 function canvasSupport() {
@@ -92,7 +96,7 @@ function convertContent() {
         itemWidth = items[i].clientWidth;
         itemBackground = getstyle(items[i], 'backgroundColor');
         itemContent = items[i].innerHTML;
-        createContentBall(itemClass, itemWidth, itemBackground, itemContent);
+        addContentCrc(itemClass, itemWidth, itemBackground, itemContent);
     }
     // sourceParent.removeChild(source);
 }
@@ -114,15 +118,15 @@ function reset() {
     bodies = [];
     elements = [];
     for( i = 0; i < ballsBehind; i++ ) {
-        createBall();
+        createCrc();
     }
     convertContent();
     for( i = 0; i < ballsFront; i++ ) {
-        createBall();
+        createCrc();
     }
 }
 
-function createContentBall(className,size,color,html) {
+function addContentCrc(className,size,color,html) {
     var element = document.createElement( 'div' ),
     circle = document.createElement( 'canvas' ),
     graphics = circle.getContext( '2d' ),
@@ -177,7 +181,7 @@ function createContentBall(className,size,color,html) {
     bodies.push( world.CreateBody(b2body) );
 }
 
-function createBall( x, y ) {
+function createCrc( x, y ) {
     var x = x || Math.random() * stage[2],
     y = y || Math.random() * 500,
     size = (Math.random() * 100 >> 0) + 20,
@@ -300,7 +304,7 @@ function onTouchEnd( event ) {
 function mouseDrag() {
     // Mouse Press
     if (createMode) {
-        createBall( mouseX, mouseY );
+        createCrc( mouseX, mouseY );
     } else if (isMouseDown && !mouseJoint) {
         var body = getBodyAtMouse();
         if (body) {

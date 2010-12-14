@@ -86,7 +86,7 @@ a:focus, button:focus, input:focus, label:focus, select:focus, textarea:focus { 
 .content a.more:hover { color:#cb2a28; }
 #legend { background:#fff; font-size:12px; padding:6px 10px; position:fixed; right:0; top:0; width:124px; 
   -moz-border-radius-bottomleft: 6px; border-bottom-left-radius: 6px; -webkit-box-shadow:0 0 10px #444; -moz-box-shadow: 0 0 10px #444; box-shadow:0 0 10px #444; }
-
+.support { background:#fff; font-size:20px; line-height:1.4; margin:0 auto; padding:6px 10px; width:400px; }
 
 
 
