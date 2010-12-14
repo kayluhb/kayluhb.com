@@ -28,7 +28,7 @@
 			dbr = int(bottomCard.rotation);
 			dbx = int(bottomCard.x);
 			dby = int(bottomCard.y);
-			bottomCard.icon.visible = bottomCard.labelMC.visible = topCard.icon.visible = false;
+			bottomCard.icon.visible = bottomCard.labelMC.visible = topCard.icon.visible = topCard.backLabelMC.visible = false;
 			
 			addEventListener(MouseEvent.MOUSE_OUT, onPreviewMouseOut);
 			addEventListener(MouseEvent.MOUSE_OVER, onPreviewMouseOver);
@@ -62,6 +62,7 @@
 			if (topCard.labelMC.alpha > 0) {
 				TweenLite.to(topCard.labelMC, 0.4, { autoAlpha:0 } );
 				TweenLite.to(topCard.icon, 0.4, { autoAlpha:1 } );
+				TweenLite.to(topCard.backLabelMC, 0.4, { autoAlpha:1 } );
 			}
 		}
 		private function peekABoo():void {
@@ -75,6 +76,7 @@
 			if (topCard.icon.alpha > 0) {
 				TweenLite.to(topCard.labelMC, 0.4, { autoAlpha:1 } );
 				TweenLite.to(topCard.icon, 0.4, { autoAlpha:0 } );
+				TweenLite.to(topCard.backLabelMC, 0.4, { autoAlpha:0 } );
 			}
 		}
 		private function rollOutShowing():void {

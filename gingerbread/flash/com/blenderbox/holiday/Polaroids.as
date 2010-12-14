@@ -91,8 +91,8 @@
 			this.visible = false;
 		}
 		private function onResize(e:Event = null):void {
-			elvesCopy.x = stage.stageWidth - 499;
-			elvesCopy.y = stage.stageHeight - 150;
+			elvesCopy.x = int(stage.stageWidth - elvesCopy.width - 20);
+			elvesCopy.y = int(stage.stageHeight - elvesCopy.height - 26);
 			for (var i:Number = 0; i < polaroids.length; ++i) polaroids[i].setDefaults();
 			if (isShowing) aniIn();
 		}
