@@ -29,7 +29,7 @@
 		private var nextState:String;
 		private var state:String;
 		
-		private const BTN_TAR_W:Number = -10;
+		private const BTN_TAR_W:Number = 6;
 		private const CLEAR_W:Number = 103;
 		private const PANEL_TAR_Y:Number = 134;
 		private const UNDO_W:Number = 59;
@@ -234,10 +234,10 @@
 			SWFAddress.setValue("/decorate");
 		}
 		private function onButtonOut(e:BaseButtonEvent):void {
-			TweenLite.to(e.target.hit, 0.5, { tint:0xF47A4D } );
+			TweenLite.to(e.target.hit, 0.5, { tint:0x335BB2 } );
 		}
 		private function onButtonOver(e:BaseButtonEvent):void {
-			TweenLite.to(e.target.hit, 0.3, { tint:0xed6533 } );
+			TweenLite.to(e.target.hit, 0.3, { tint:0x28478b } );
 		}
 		private function onCandySelect(e:NavEvent):void {
 			gingerbreadCookie.addCandy(e.id);
