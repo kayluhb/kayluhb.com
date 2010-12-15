@@ -250,8 +250,9 @@
 			gingerbreadCookie.enabled = true;
 		}
 		private function onStageKeyDown(e:KeyboardEvent):void {
-			if (e.keyCode == 40 && e.shiftKey) {
+			if (e.keyCode == 83) {
 				stage.removeEventListener(KeyboardEvent.KEY_DOWN, onStageKeyDown);
+				removeChild(ssnow);
 				addChild(new SnowStorm());
 			}
 		}
@@ -259,7 +260,8 @@
 			if (isDecorateDrawn) decorationPanel.y = int(stage.stageHeight - PANEL_TAR_Y);
 			else decorationPanel.y = stage.stageHeight + 50;
 			decorationPanel.x = int(stage.stageWidth/2-decorationPanel.bg.width/2);
-			credit.y = int(stage.stageHeight - 22);
+			credit.y = ssnow.y = int(stage.stageHeight - 22);
+			ssnow.x=int(stage.stageWidth - 64);
 		}
 		private function onSizeSelect(e:NavEvent):void {
 			gingerbreadCookie.lineWidth = e.id;
