@@ -28,11 +28,13 @@
 			dbr = int(bottomCard.rotation);
 			dbx = int(bottomCard.x);
 			dby = int(bottomCard.y);
-			bottomCard.icon.visible = bottomCard.labelMC.visible = topCard.icon.visible = topCard.backLabelMC.visible = false;
-			
-			addEventListener(MouseEvent.MOUSE_OUT, onPreviewMouseOut);
-			addEventListener(MouseEvent.MOUSE_OVER, onPreviewMouseOver);
-			addEventListener(MouseEvent.MOUSE_UP, onPreviewMouseUp);
+			bottomCard.icon.visible = bottomCard.labelMC.visible = bottomCard.backLabelMC.visible = topCard.icon.visible = topCard.backLabelMC.visible = false;
+			bottomCard.hit.addEventListener(MouseEvent.MOUSE_OUT, onPreviewMouseOut);
+			bottomCard.hit.addEventListener(MouseEvent.MOUSE_OVER, onPreviewMouseOver);
+			bottomCard.hit.addEventListener(MouseEvent.MOUSE_UP, onPreviewMouseUp);
+			topCard.hit.addEventListener(MouseEvent.MOUSE_OUT, onPreviewMouseOut);
+			topCard.hit.addEventListener(MouseEvent.MOUSE_OVER, onPreviewMouseOver);
+			topCard.hit.addEventListener(MouseEvent.MOUSE_UP, onPreviewMouseUp);
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
 		// publics
@@ -40,6 +42,8 @@
 			isCollapsed = true;
 			isHidden = false;
 			resetIcons();
+			TweenLite.killTweensOf(bottomCard);
+			TweenLite.killTweensOf(topCard);
 			TweenLite.to(bottomCard, 0.5, { rotation:dbr, x:dbx, y:dby } );
 			TweenLite.to(topCard, 0.5, { rotation: -20, x:276, y:27 } );
 		}
@@ -66,6 +70,8 @@
 			}
 		}
 		private function peekABoo():void {
+			TweenLite.killTweensOf(bottomCard);
+			TweenLite.killTweensOf(topCard);
 			TweenLite.to(bottomCard, .8, { rotation:-19, x:129, y:44, ease:Expo.easeOut, delay:0.1 } );
 			TweenLite.to(topCard, .8, { rotation:-11, x:220, y:86, ease:Expo.easeOut, delay:0.1 } );
 		}
@@ -93,14 +99,22 @@
 			onResize();
 		}
 		private function onPreviewMouseOut(e:MouseEvent):void {
-			if (isCollapsed) collapse();
-			else if (isHidden) hide();
-			else rollOutShowing();
+			if (isCollapsed) { 
+				collapse();
+			} else if (isHidden) {
+				hide();
+			} else {
+				rollOutShowing();
+			}
 		}
 		private function onPreviewMouseOver(e:MouseEvent):void {
-			if (isCollapsed) peekABoo();
-			else if (isHidden) peekABooHidden();
-			else rollOverShowing();
+			if (isCollapsed) {
+				peekABoo();
+			} else if (isHidden) {
+				peekABooHidden();
+			} else {
+				rollOverShowing();
+			}
 		}
 		private function onPreviewMouseUp(e:MouseEvent):void {
 			if (SWFAddress.getValue() != "/elves") SWFAddress.setValue("/elves");

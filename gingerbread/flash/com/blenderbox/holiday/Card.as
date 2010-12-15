@@ -204,11 +204,10 @@
 		
 		// event handlers
 		private function onAddedToStage(e:Event):void {
-			
 			var xmlLoader:XMLLoader = new XMLLoader();
-      xmlLoader.addEventListener(XmlLoadEvent.ON_LOAD, onXmlLoad);
-      var xmlPath:String = Env.isOnline ? "/gingerbread/xml/Main.xml" : "../xml/Main.xml";
-      xmlLoader.load(xmlPath);
+			xmlLoader.addEventListener(XmlLoadEvent.ON_LOAD, onXmlLoad);
+			var xmlPath:String = Env.isOnline ? "/gingerbread/xml/Main.xml" : "../xml/Main.xml";
+			xmlLoader.load(xmlPath);
 			
 			addEventListeners();
 			onResize();
@@ -261,7 +260,7 @@
 			else decorationPanel.y = stage.stageHeight + 50;
 			decorationPanel.x = int(stage.stageWidth/2-decorationPanel.bg.width/2);
 			credit.y = ssnow.y = int(stage.stageHeight - 22);
-			ssnow.x=int(stage.stageWidth - 64);
+			ssnow.x = int(stage.stageWidth - 64);
 		}
 		private function onSizeSelect(e:NavEvent):void {
 			gingerbreadCookie.lineWidth = e.id;
@@ -303,10 +302,10 @@
 		
 		private var sendLoader:URLLoader = new URLLoader();
 		private function initSend():void {
-		  sendLoader.dataFormat = URLLoaderDataFormat.VARIABLES;
-      sendLoader.addEventListener(Event.COMPLETE, onCookieSent);
-      sendLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, securityErrorHandler);
-      sendLoader.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
+			sendLoader.dataFormat = URLLoaderDataFormat.VARIABLES;
+			sendLoader.addEventListener(Event.COMPLETE, onCookieSent);
+			sendLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, securityErrorHandler);
+			sendLoader.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
 		}
 		private function onSendCookie(e:BaseButtonEvent):void {
 		    saveButton.enabled = false;
@@ -319,8 +318,8 @@
         request.contentType = "application/octet-stream";
         request.method = URLRequestMethod.POST;
         request.data = png;
-  			TweenLite.to(saveButton, 0.6, { autoAlpha:0 } );
-  			TweenLite.to(savingText, 0.6, { autoAlpha:1, delay:.6 } );
+			TweenLite.to(saveButton, 0.6, { autoAlpha:0 } );
+			TweenLite.to(savingText, 0.6, { autoAlpha:1, delay:.6 } );
         try {
             sendLoader.load(request);
         } catch (err) {
@@ -330,7 +329,7 @@
     private function onCookieSent(e:Event):void {
         var res = new XML(unescape(sendLoader.data));
         var variables:URLVariables = new URLVariables();
-        var request:URLRequest = new URLRequest("http://twitter.com?status=Check out my android g-man! "+res.links.imgur_page);
+        var request:URLRequest = new URLRequest("http://twitter.com?status=My very own android g-man! " + res.links.imgur_page + " (via http://bit.ly/i9TGaS)");
         try {            
             navigateToURL(request, "_blank");
         } catch (e:Error) {
@@ -339,15 +338,14 @@
         SWFAddress.setValue("/thank-you");
     }
     private function ioErrorHandler(e:IOErrorEvent):void { 
-        trace("ioErrorHandler: " + e);
-  			TweenLite.to(errorText, 0.6, { autoAlpha:1 } );
-  			TweenLite.to(savingText, 0.6, { autoAlpha:0 } );
-    }
+		trace("ioErrorHandler: " + e);
+		TweenLite.to(errorText, 0.6, { autoAlpha:1 } );
+		TweenLite.to(savingText, 0.6, { autoAlpha:0 } );
+    }	
     private function securityErrorHandler(e:SecurityErrorEvent):void { 
-        trace("securityErrorHandler: " + e);
-  			TweenLite.to(errorText, 0.6, { autoAlpha:1 } );
-  			TweenLite.to(savingText, 0.6, { autoAlpha:0 } );
+		trace("securityErrorHandler: " + e);
+		TweenLite.to(errorText, 0.6, { autoAlpha:1 } );
+		TweenLite.to(savingText, 0.6, { autoAlpha:0 } );
     }
 	}
-	
 }
