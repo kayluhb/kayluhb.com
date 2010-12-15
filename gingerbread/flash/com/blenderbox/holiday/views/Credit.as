@@ -14,6 +14,7 @@ package com.blenderbox.holiday.views
 		{
 			hit.addEventListener(MouseEvent.ROLL_OUT, handleRollOut);
 			hit.addEventListener(MouseEvent.ROLL_OVER, handleRollOver);
+			bg.visible = creditText.visible = false;
 		}
 		// event handlers
 		private function handleRollOut(e:MouseEvent):void {
