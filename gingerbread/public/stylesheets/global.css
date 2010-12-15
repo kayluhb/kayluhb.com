@@ -17,9 +17,8 @@ legend{color:#000;}
 
 /* BEGIN HTML */
 * { margin:0; padding:0; }
-html, body { height:100%; }
-html { background:#c9dee0; overflow:auto; }
-body { background:#c9dee0; }
+html, body { background:#c9dee0; height:100%; }
+html { overflow:hidden; }
 body, div, dd, dl, dt, h1, h2, h3, h4, h5, h6, li, ol, span, td, th, ul { font: 16px/23px Arial, Verdana, sans-serif; color:#314246; }
 a { color:#44a2cd; text-decoration:none; border:none; outline:none; }
 a:hover, a.hover, h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover { color:#0079bb; text-decoration:underline; }
