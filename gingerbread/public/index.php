@@ -48,8 +48,7 @@ if ($showPage) {
 	<div id="flashWrapper">
 		<div id="flashContent">
 			<div id="header">
-				<img id="logo" src="images/logo.gif" height="12" width="77" alt="blenderbox" />
-				<img id="sweeten" src="images/sweeten.gif" height="37" width="306" alt="Sweeten Someone's Holiday" />
+			  
 			</div>
 			<div id="headerDS"></div>
 			<div id="noFlashContentWrapper">

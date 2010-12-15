@@ -181,6 +181,7 @@
 		private function hideSend():void {
 			decorateButton.visible = false;
 			TweenLite.to(sendCopy, 0.6, { autoAlpha:0 } );
+			TweenLite.to(saveButton, 0.6, { autoAlpha:0 } );
 			TweenLite.to(errorText, 0.6, { autoAlpha:0 } );
 			TweenLite.to(savingText, 0.6, { autoAlpha:0 } );
 			TweenLite.to(tag, 1.2, { rotation:0, y:-tag.height, ease:Back.easeOut, onComplete:changeState, onCompleteParams:[nextState] } );
@@ -258,6 +259,7 @@
 			if (isDecorateDrawn) decorationPanel.y = int(stage.stageHeight - PANEL_TAR_Y);
 			else decorationPanel.y = stage.stageHeight + 50;
 			decorationPanel.x = int(stage.stageWidth/2-decorationPanel.bg.width/2);
+			credit.y = int(stage.stageHeight - 22);
 		}
 		private function onSizeSelect(e:NavEvent):void {
 			gingerbreadCookie.lineWidth = e.id;
@@ -316,7 +318,7 @@
         request.method = URLRequestMethod.POST;
         request.data = png;
   			TweenLite.to(saveButton, 0.6, { autoAlpha:0 } );
-  			TweenLite.to(savingText, 0.6, { autoAlpha:1 } );
+  			TweenLite.to(savingText, 0.6, { autoAlpha:1, delay:.6 } );
         try {
             sendLoader.load(request);
         } catch (err) {
@@ -326,8 +328,7 @@
     private function onCookieSent(e:Event):void {
         var res = new XML(unescape(sendLoader.data));
         var variables:URLVariables = new URLVariables();
-        trace("http://twitter.com?status=Check out my android g-man! "+res.links.original);
-        var request:URLRequest = new URLRequest("http://twitter.com?status=Check out my android g-man! "+res.links.original);
+        var request:URLRequest = new URLRequest("http://twitter.com?status=Check out my android g-man! "+res.links.imgur_page);
         try {            
             navigateToURL(request, "_blank");
         } catch (e:Error) {
