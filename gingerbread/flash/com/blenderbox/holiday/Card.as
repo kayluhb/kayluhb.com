@@ -3,6 +3,7 @@
 	import com.adobe.images.PNGEncoder;
 	import com.blenderbox.events.*;
 	import com.blenderbox.holiday.events.HolidayEvent;
+	import com.blenderbox.holiday.models.FormData;
 	import com.blenderbox.holiday.views.SnowStorm;
 	import com.blenderbox.motion.easing.*;
 	import com.blenderbox.motion.TweenLite;
@@ -15,6 +16,7 @@
 	import flash.ui.Keyboard;
 	import flash.ui.KeyLocation;
 	import flash.utils.ByteArray;
+	import flash.xml.*;
 	
 	/**
 	 * @author cbrown
@@ -49,34 +51,34 @@
 			decorationPanel.sizeSelector.addEventListener(NavEvent.BY_ID, onSizeSelect);
 			decorationPanel.colorSelector.addEventListener(NavEvent.BY_ID, onColorSelect);
 			
-			anotherCookieButton.addEventListener(	BaseButtonEvent.HANDLE_RELEASE, onAnotherCookieRelease);
-			clearButton.addEventListener(			BaseButtonEvent.HANDLE_RELEASE, onClearRelease);
-			decorateButton.addEventListener(		BaseButtonEvent.HANDLE_RELEASE, onDecorateRelease);
-			emailButton.addEventListener(			BaseButtonEvent.HANDLE_RELEASE, onEmailRelease);
-			polaroidPreview.addEventListener(		HolidayEvent.CLOSE_ELVES, onCloseElves);
-			sendButton.addEventListener(			BaseButtonEvent.HANDLE_RELEASE, onSendRelease);
-			startButton.addEventListener(			BaseButtonEvent.HANDLE_RELEASE, onStartRelease);
-			undoButton.addEventListener(			BaseButtonEvent.HANDLE_RELEASE, onUndoRelease);
+			anotherCookieButton.addEventListener(BaseButtonEvent.HANDLE_RELEASE, onAnotherCookieRelease);
+			clearButton.addEventListener(BaseButtonEvent.HANDLE_RELEASE, onClearRelease);
+			decorateButton.addEventListener(BaseButtonEvent.HANDLE_RELEASE, onDecorateRelease);
+			polaroidPreview.addEventListener(HolidayEvent.CLOSE_ELVES, onCloseElves);
+			sendButton.addEventListener(BaseButtonEvent.HANDLE_RELEASE, onSendRelease);
+			startButton.addEventListener(BaseButtonEvent.HANDLE_RELEASE, onStartRelease);
+			undoButton.addEventListener(BaseButtonEvent.HANDLE_RELEASE, onUndoRelease);
+			saveButton.addEventListener(BaseButtonEvent.HANDLE_RELEASE, onSendCookie);
 			
-			anotherCookieButton.addEventListener(	BaseButtonEvent.HANDLE_OUT, onButtonOut);
-			decorateButton.addEventListener(		BaseButtonEvent.HANDLE_OUT, onButtonOut);
-			emailButton.addEventListener(			BaseButtonEvent.HANDLE_OUT, onButtonOut);
-			sendButton.addEventListener(			BaseButtonEvent.HANDLE_OUT, onButtonOut);
-			startButton.addEventListener(			BaseButtonEvent.HANDLE_OUT, onButtonOut);
-			emailForm.emailButton.addEventListener(	BaseButtonEvent.HANDLE_OUT, onButtonOut);
+			anotherCookieButton.addEventListener(BaseButtonEvent.HANDLE_OUT, onButtonOut);
+			decorateButton.addEventListener(BaseButtonEvent.HANDLE_OUT, onButtonOut);
+			sendButton.addEventListener(BaseButtonEvent.HANDLE_OUT, onButtonOut);
+			startButton.addEventListener(BaseButtonEvent.HANDLE_OUT, onButtonOut);
+			saveButton.addEventListener(BaseButtonEvent.HANDLE_OUT, onButtonOut);
 			
-			anotherCookieButton.addEventListener(	BaseButtonEvent.HANDLE_OVER, onButtonOver);
-			decorateButton.addEventListener(		BaseButtonEvent.HANDLE_OVER, onButtonOver);
-			emailButton.addEventListener(			BaseButtonEvent.HANDLE_OVER, onButtonOver);
-			sendButton.addEventListener(			BaseButtonEvent.HANDLE_OVER, onButtonOver);
-			startButton.addEventListener(			BaseButtonEvent.HANDLE_OVER, onButtonOver);
-			emailForm.emailButton.addEventListener(	BaseButtonEvent.HANDLE_OVER, onButtonOver);
+			anotherCookieButton.addEventListener(BaseButtonEvent.HANDLE_OVER, onButtonOver);
+			decorateButton.addEventListener(BaseButtonEvent.HANDLE_OVER, onButtonOver);
+			sendButton.addEventListener(BaseButtonEvent.HANDLE_OVER, onButtonOver);
+			startButton.addEventListener(BaseButtonEvent.HANDLE_OVER, onButtonOver);
+			saveButton.addEventListener(BaseButtonEvent.HANDLE_OVER, onButtonOver);
 			
-			clearButton.addEventListener(			BaseButtonEvent.HANDLE_OUT, onClearButtonOut);
-			undoButton.addEventListener(			BaseButtonEvent.HANDLE_OUT, onUndoButtonOut);
+			clearButton.addEventListener(BaseButtonEvent.HANDLE_OUT, onClearButtonOut);
+			undoButton.addEventListener(BaseButtonEvent.HANDLE_OUT, onUndoButtonOut);
 			
-			clearButton.addEventListener(			BaseButtonEvent.HANDLE_OVER, onClearButtonOver);
-			undoButton.addEventListener(			BaseButtonEvent.HANDLE_OVER, onUndoButtonOver);
+			clearButton.addEventListener(BaseButtonEvent.HANDLE_OVER, onClearButtonOver);
+			undoButton.addEventListener(BaseButtonEvent.HANDLE_OVER, onUndoButtonOver);
+			
+			initSend();
 		}
 		private function changeState(s:String):void {
 			if (this.state != "elves") this.lastState = this.state;
@@ -86,7 +88,6 @@
 				case "decorate": 		drawDecorate(); break;
 				case "elves": 			drawElves(); break;
 				case "send": 			drawSend(); break;
-				case "send-to-friend": 	drawSendToFriend(); break;
 				case "thank-you": 		drawThankYou(); break;
 			}
 			if (this.state != "" && this.state != "elves") {
@@ -120,17 +121,11 @@
 		}
 		private function drawSend():void { 
 			decorateButton.visible = true;
+			saveButton.enabled = true;
 			TweenLite.to(parchment, 1.5, { y: -parchment.height, ease:Expo.easeOut } );
-			TweenLite.to(gingerbreadCookie, 1, { rotation:-11, x:76, y:203, ease:Expo.easeOut } );
-			TweenLite.to(sendCopy, 0.6, { autoAlpha:1, delay:0.4 } );
-			TweenLite.to(emailButton, 0.6, { autoAlpha:1, delay:0.8 } );
-		}
-		private function drawSendToFriend():void {
-			emailForm.enable();
-			emailForm.reset();
-			emailForm.visible = true;
-			TweenLite.to(emailForm, 1.5, { y:153, ease:Expo.easeOut } );
 			TweenLite.to(gingerbreadCookie, 1, { rotation: -11, x:2, y:225, ease:Expo.easeOut } );
+			TweenLite.to(sendCopy, 0.6, { autoAlpha:1, delay:0.4 } );
+			TweenLite.to(saveButton, 0.6, { autoAlpha:1, delay:0.6 } );
 			tag.x = 219;
 			tag.gotoAndStop(2);
 			TweenLite.to(tag, 1.2, { rotation:0, y:-10, ease:Back.easeOut, delay:0.8 } );
@@ -141,16 +136,7 @@
 			TweenLite.to(anotherCookieButton, 0.6, { autoAlpha:1, delay:0.4 } );
 		}
 		private function drawUI():void {
-			anotherCookieButton.visible = false;
-			decorateCopy.visible = false;
-			decorateButton.visible = false;
-			emailButton.visible = false;
-			emailForm.visible = false;
-			homeCopy.visible = false;
-			sendButton.visible = false;
-			sendCopy.visible = false;
-			startButton.visible = false;
-			thankYouCopy.visible = false;
+			anotherCookieButton.visible = decorateCopy.visible = decorateButton.visible = homeCopy.visible = sendButton.visible = sendCopy.visible = startButton.visible = thankYouCopy.visible = saveButton.visible = errorText.visible = savingText.visible = false;
 		}
 		private function drawUndoButtons():void {
 			undoButton.labelMask.width = undoButton.hit.width = 0;
@@ -195,10 +181,8 @@
 		private function hideSend():void {
 			decorateButton.visible = false;
 			TweenLite.to(sendCopy, 0.6, { autoAlpha:0 } );
-			TweenLite.to(emailButton, 0.6, { autoAlpha:0, onComplete:changeState, onCompleteParams:[nextState] } );
-		}
-		private function hideSendToFriend():void { 
-			TweenLite.to(emailForm, 1, { y:-emailForm.height, ease:Expo.easeOut, onComplete:onFormOut } );
+			TweenLite.to(errorText, 0.6, { autoAlpha:0 } );
+			TweenLite.to(savingText, 0.6, { autoAlpha:0 } );
 			TweenLite.to(tag, 1.2, { rotation:0, y:-tag.height, ease:Back.easeOut, onComplete:changeState, onCompleteParams:[nextState] } );
 		}
 		private function hideThankYou():void {
@@ -207,13 +191,12 @@
 		}
 		private function undoState(s:String):void {
 			nextState = s;
-			trace("undo state", nextState)
+			// trace("undo state", nextState)
 			switch (state) {
 				case "": 				hideHome(); break;
 				case "elves": 			hideElves(); break;
 				case "decorate": 		hideDecorate(); break;
 				case "send": 			hideSend(); break;
-				case "send-to-friend": 	hideSendToFriend(); break;
 				case "thank-you": 		hideThankYou(); break;
 			}
 		}
@@ -265,9 +248,6 @@
 			drawUndoButtons();
 			gingerbreadCookie.enabled = true;
 		}
-		private function onFormOut():void {
-			emailForm.visible = false;
-		}
 		private function onStageKeyDown(e:KeyboardEvent):void {
 			if (e.keyCode == 40 && e.shiftKey) {
 				stage.removeEventListener(KeyboardEvent.KEY_DOWN, onStageKeyDown);
@@ -289,7 +269,7 @@
 				if (state == null) changeState(s);
 				else undoState(s);
 			}
-			trace(e, s);
+			//trace('onSWFAddress', e, s);
 		}
 		private function onUndoButtonOut(e:BaseButtonEvent):void {
 			TweenLite.to(e.target.hit, .8, { width:UNDO_W, x:0, ease:Expo.easeOut } );
@@ -312,10 +292,59 @@
 			onSWFAddress();
 		}
 		// nav handlers
-		private function onDecorateRelease(e:BaseButtonEvent):void { 	SWFAddress.setValue("/decorate"); }
-		private function onEmailRelease(e:BaseButtonEvent):void {		SWFAddress.setValue("/send-to-friend"); }
-		private function onSendRelease(e:BaseButtonEvent):void { 		SWFAddress.setValue("/send"); }
-		private function onStartRelease(e:BaseButtonEvent):void { 		SWFAddress.setValue("/decorate"); }
+		private function onDecorateRelease(e:BaseButtonEvent):void { SWFAddress.setValue("/decorate"); }
+		private function onSendRelease(e:BaseButtonEvent):void { SWFAddress.setValue("/send"); }
+		private function onStartRelease(e:BaseButtonEvent):void { SWFAddress.setValue("/decorate"); }
+		
+		
+		private var sendLoader:URLLoader = new URLLoader();
+		private function initSend():void {
+		  sendLoader.dataFormat = URLLoaderDataFormat.VARIABLES;
+      sendLoader.addEventListener(Event.COMPLETE, onCookieSent);
+      sendLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, securityErrorHandler);
+      sendLoader.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
+		}
+		private function onSendCookie(e:BaseButtonEvent):void {
+		    saveButton.enabled = false;
+		    var vars = "?key=" + FormData.API_KEY + "&name=android_gingerman&title=Android Gingerman";
+        var variables:URLVariables = new URLVariables();
+        var request:URLRequest = new URLRequest(FormData.SAVE_PAGE + vars);
+        var b:BitmapData = new BitmapData(380, 370, true);
+        b.draw(gingerbreadCookie);
+        var png:ByteArray = PNGEncoder.encode(b);
+        request.contentType = "application/octet-stream";
+        request.method = URLRequestMethod.POST;
+        request.data = png;
+  			TweenLite.to(saveButton, 0.6, { autoAlpha:0 } );
+  			TweenLite.to(savingText, 0.6, { autoAlpha:1 } );
+        try {
+            sendLoader.load(request);
+        } catch (err) {
+            trace("There was an error processing the gman.", err);
+        }
+    }
+    private function onCookieSent(e:Event):void {
+        var res = new XML(unescape(sendLoader.data));
+        var variables:URLVariables = new URLVariables();
+        trace("http://twitter.com?status=Check out my android g-man! "+res.links.original);
+        var request:URLRequest = new URLRequest("http://twitter.com?status=Check out my android g-man! "+res.links.original);
+        try {            
+            navigateToURL(request, "_blank");
+        } catch (e:Error) {
+            trace('error', e);
+        }
+        SWFAddress.setValue("/thank-you");
+    }
+    private function ioErrorHandler(e:IOErrorEvent):void { 
+        trace("ioErrorHandler: " + e);
+  			TweenLite.to(errorText, 0.6, { autoAlpha:1 } );
+  			TweenLite.to(savingText, 0.6, { autoAlpha:0 } );
+    }
+    private function securityErrorHandler(e:SecurityErrorEvent):void { 
+        trace("securityErrorHandler: " + e);
+  			TweenLite.to(errorText, 0.6, { autoAlpha:1 } );
+  			TweenLite.to(savingText, 0.6, { autoAlpha:0 } );
+    }
 	}
 	
 }
