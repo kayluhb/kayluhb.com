@@ -5,6 +5,8 @@
 	<title>Android Gingerbread Maker - Happy Holidays!</title>
     <meta id="description" name="description" content="A gingerbread man maker for the Nexus Challenge" />
     <meta name="keyWords" content="holiday, gingerbread man" />
+	<link rel="image_src" href="/images/share.png" />
+    <meta name="medium" content="image" />
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
 	<link href="stylesheets/global.css" media="all" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
